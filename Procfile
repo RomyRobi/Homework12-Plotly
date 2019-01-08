@@ -1,1 +1,1 @@
-web: gunicorn belly_diversity_app.app:app
+web: homework12-plotly.app:app
