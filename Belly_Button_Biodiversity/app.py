@@ -32,6 +32,11 @@ Base.prepare(db.engine, reflect=True)
 Samples_Metadata = Base.classes.sample_metadata
 Samples = Base.classes.samples
 
+@app.before_first_request
+def setup():
+    # Recreate database each time for demo
+    # db.drop_all()
+    db.create_all()
 
 @app.route("/")
 def index():
