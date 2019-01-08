@@ -10,7 +10,6 @@ from sqlalchemy import create_engine
 
 from flask import Flask, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 
 app = Flask(__name__)
 
@@ -21,7 +20,6 @@ app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/bellybutton.sqlite"
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
 
 # reflect an existing database into a new model
 Base = automap_base()
@@ -31,12 +29,6 @@ Base.prepare(db.engine, reflect=True)
 # Save references to each table
 Samples_Metadata = Base.classes.sample_metadata
 Samples = Base.classes.samples
-
-@app.before_first_request
-def setup():
-    # Recreate database each time for demo
-    # db.drop_all()
-    db.create_all()
 
 @app.route("/")
 def index():
